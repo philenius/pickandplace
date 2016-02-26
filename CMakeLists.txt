@@ -104,3 +104,10 @@ IF( NAME STREQUAL "example_joystick" )
 ENDIF()
 
 SOURCE_GROUP( "Source Files" FILES ${SRCS} ${HEADER} )
+
+
+find_package( OpenCV REQUIRED )
+TARGET_LINK_LIBRARIES(
+	${NAME}
+	${OpenCV_LIBS}
+)
