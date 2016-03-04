@@ -1,8 +1,10 @@
 #include <iostream>
 #include <stdlib.h>
 #include "rec/robotino/api2/all.h"
+#include "CameraExtender.h"
 
 using namespace rec::robotino::api2;
+using namespace pickandplace;
 using namespace std;
 
 class MyCom: public Com {
@@ -29,6 +31,7 @@ public:
 };
 
 MyCom com;
+CameraExtender camera;
 
 void init(const string& hostname) {
 	// Connect

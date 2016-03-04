@@ -38,7 +38,7 @@ void CameraExtender::imageReceivedEvent(const unsigned char* data,
 	static const clock_t beginTime = clock();
 	static unsigned int fps;
 
-	countCalls < sizeof(unsigned long) ? countCalls++ : countCalls = 0;
+	countCalls < ULONG_MAX ? countCalls++ : countCalls = 0;
 
 	// Calculate frames per second
 	float elapsedTime = (clock() - beginTime) / 1000000;
@@ -57,11 +57,11 @@ void CameraExtender::imageReceivedEvent(const unsigned char* data,
 
 	FILE* fp = fopen(outputStream.str().c_str(), "w");
 	if (fp == NULL) {
-		cerr << "Error: Cannot open file " << outputStream.str() << std::endl;
+		cerr << "Error: Cannot open file " << outputStream.str() << endl;
 	} else {
-		cout << "wrote image to file " << outputStream.str() << endl;
 		fprintf(fp, "P6 %d %d 255\n", width, height);
 		fwrite(data, width * height * 3, 1, fp);
+		fclose(fp);
 	}
 }
 }

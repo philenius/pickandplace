@@ -11,6 +11,7 @@
 #include <sstream>
 #include <stdio.h>
 #include <iostream>
+#include <limits.h>
 #include "rec/robotino/api2/all.h"
 
 using namespace rec::robotino::api2;
