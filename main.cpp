@@ -1,37 +1,19 @@
 #include <iostream>
 #include <stdlib.h>
 #include "rec/robotino/api2/all.h"
+#include "MyCom.h"
 #include "CameraExtender.h"
+//#include "DistanceWrapper.h"
+//#include "OdometryWrapper.h"
 
 using namespace rec::robotino::api2;
 using namespace pickandplace;
 using namespace std;
 
-class MyCom: public Com {
-public:
-	MyCom() :
-			Com("pickandplace") {
-	}
-
-	void errorEvent(const char* errorString) {
-		cerr << "Error: " << errorString << endl;
-	}
-
-	void connectedEvent() {
-		cout << "Connected." << endl;
-	}
-
-	void connectionClosedEvent() {
-		cout << "Connection closed." << endl;
-	}
-
-	void logEvent(const char* message, int level) {
-		cout << message << endl;
-	}
-};
-
 MyCom com;
 CameraExtender camera;
+//DistanceWrapper distances;
+//OdometryWrapper odometry;
 
 void init(const string& hostname) {
 	// Connect
@@ -70,6 +52,7 @@ int main(int argc, char **argv) {
 		}
 
 		destroy();
+		waitForKey();
 	} catch (const RobotinoException& e) {
 		cerr << "Robotino Error: " << e.what() << endl;
 	} catch (const exception& e) {
