@@ -9,6 +9,7 @@
 #define CYLINDERDETECTION_H_
 
 #include <opencv2/opencv.hpp>
+#include "Env.h"
 
 using namespace std;
 using namespace cv;
@@ -17,7 +18,7 @@ namespace pickandplace {
 
 class CylinderDetection {
 public:
-	CylinderDetection(string cameraImage);
+	CylinderDetection();
 	virtual ~CylinderDetection();
 	bool IsCylinderPresent();
 

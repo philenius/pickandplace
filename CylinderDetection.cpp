@@ -11,8 +11,8 @@ namespace pickandplace {
 
 string cameraImage;
 
-CylinderDetection::CylinderDetection(string cameraImage) {
-	this->cameraImage = cameraImage;
+CylinderDetection::CylinderDetection() {
+	this->cameraImage = CAMERAIMAGE;
 }
 
 CylinderDetection::~CylinderDetection() {
