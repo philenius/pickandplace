@@ -1,8 +1,11 @@
+#define CAMERAIMAGE "/home/enrico/examples/src/c++/pickandplace/cameraImage.ppm"
+
 #include <iostream>
 #include <stdlib.h>
 #include "rec/robotino/api2/all.h"
 #include "MyCom.h"
 #include "CameraExtender.h"
+#include "CylinderDetection.h"
 //#include "DistanceWrapper.h"
 //#include "OdometryWrapper.h"
 
