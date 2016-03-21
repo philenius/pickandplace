@@ -44,3 +44,8 @@ install_manifest.txt
 *.ppm
 *.jpg
 
+# Eclipse
+/.settings
+.project
+.cproject
+
