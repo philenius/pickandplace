@@ -17,12 +17,12 @@ namespace pickandplace {
 
 class CylinderDetection {
 public:
-	CylinderDetection(char* cameraImage);
+	CylinderDetection(string cameraImage);
 	virtual ~CylinderDetection();
 	bool IsCylinderPresent();
 
 private:
-	char* cameraImage;
+	string cameraImage;
 };
 
 } /* namespace pickandplace */

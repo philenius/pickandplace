@@ -9,9 +9,9 @@
 
 namespace pickandplace {
 
-char* cameraImage;
+string cameraImage;
 
-CylinderDetection::CylinderDetection(char* cameraImage) {
+CylinderDetection::CylinderDetection(string cameraImage) {
 	this->cameraImage = cameraImage;
 }
 
