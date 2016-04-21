@@ -97,16 +97,16 @@ void RelativeRobotPosition::WriteDebugInfo(float leftSidePercentage,
 
 	// If the robot is nearly in the middle of the yellow cardboard, then the text "centered" is displayed.
 	if (leftSidePercentage >= 0.35 && rightSidePercentage >= 0.35) {
-		putText(src, "centered", Point(160, 20), CV_FONT_NORMAL, 0.9,
+		putText(src, "centered", Point(170, 20), CV_FONT_NORMAL, 0.9,
 				Scalar(255, 255, 255));
-		putText(src, text3, Point(25, 20), CV_FONT_NORMAL, 0.6,
+		putText(src, text3, Point(10, 20), CV_FONT_NORMAL, 0.6,
 				Scalar(255, 255, 255));
 	} else {
-		putText(src, text1, Point(25, 20), CV_FONT_NORMAL, 0.6,
+		putText(src, text1, Point(10, 20), CV_FONT_NORMAL, 0.6,
 				Scalar(255, 255, 255));
-		putText(src, text2, Point(25, 50), CV_FONT_NORMAL, 0.6,
+		putText(src, text2, Point(10, 50), CV_FONT_NORMAL, 0.6,
 				Scalar(255, 255, 255));
-		putText(src, text3, Point(25, 80), CV_FONT_NORMAL, 0.6,
+		putText(src, text3, Point(10, 80), CV_FONT_NORMAL, 0.6,
 				Scalar(255, 255, 255));
 	}
 
