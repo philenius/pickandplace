@@ -142,11 +142,19 @@ Mat RelativeRobotPosition::ExtractColoredBox() {
 	Scalar upperBoundary(33.5, 168.3, 255);
 	inRange(hsv, lowerBoundary, upperBoundary, dst);
 
+	// Applies an opening operation to the image after the binary threshold
+	Mat eroded, dilated;
+	Mat element = getStructuringElement(MORPH_RECT, Size(4, 4));
+	Mat element2 = getStructuringElement(MORPH_RECT, Size(12, 12));
+
+	erode(dst, eroded, element);
+	dilate(eroded, dilated, element2);
+
 	// Shows image
-	imshow("binary threshold", dst);
+	imshow("binary threshold", dilated);
 	waitKey(2);
 
-	return dst;
+	return dilated;
 }
 
 string RelativeRobotPosition::convertFloatToString(float value) {
