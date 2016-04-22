@@ -9,12 +9,13 @@
 #define DISTANCEWRAPPER_H_
 
 #include "rec/robotino/api2/all.h"
+#include "Subject.h"
 
 using namespace rec::robotino::api2;
 
 namespace pickandplace {
 
-class DistanceWrapper : rec::robotino::api2::DistanceSensorArray {
+class DistanceWrapper : rec::robotino::api2::DistanceSensorArray, public Subject {
 public:
 	DistanceWrapper();
 	virtual ~DistanceWrapper();

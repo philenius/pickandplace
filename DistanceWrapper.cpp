@@ -16,7 +16,6 @@ DistanceWrapper::DistanceWrapper() {
 }
 
 DistanceWrapper::~DistanceWrapper() {
-	// TODO Auto-generated destructor stub
 }
 
 
@@ -57,6 +56,7 @@ void DistanceWrapper::distancesChangedEvent( const float* distances, unsigned in
 	{
 		actualValues[i] = distances[i];
 	}
+	notify();
 
 
 
