@@ -16,7 +16,7 @@ RelativeRobotPosition::RelativeRobotPosition() {
 RelativeRobotPosition::~RelativeRobotPosition() {
 }
 
-void RelativeRobotPosition::getPosition(float* differenceOfPixels,
+void RelativeRobotPosition::getPosition(int* differenceOfPixels,
 		float* leftPixelPercentage, float* rightPixelPercentage) {
 	Mat src;
 
@@ -46,7 +46,7 @@ void RelativeRobotPosition::getPosition(float* differenceOfPixels,
 	int rightPixelCount = countNonZero(rightHalfOfImage);
 
 	// negative means: too much on the left side; positive means: too much in the right side
-	float resultValue = rightPixelCount - leftPixelCount;
+	int resultValue = rightPixelCount - leftPixelCount;
 	cout << "result: " << resultValue << endl;
 
 	int totalPixels = leftPixelCount + rightPixelCount;

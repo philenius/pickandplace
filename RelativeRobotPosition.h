@@ -32,7 +32,7 @@ public:
 	 * @param leftPixelPercentage	The amount of yellow pixels in percent (of all pixels) residing on the left half of the camera image.
 	 * @param rightPixelPercentage	The amount of yellow pixels in percent (of all pixels) residing on the right half of the camera image.
 	 */
-	void getPosition(float* differenceOfPixels, float* leftPixelPercentage,
+	void getPosition(int* differenceOfPixels, float* leftPixelPercentage,
 			float* rightPixelPercentage);
 
 private:
