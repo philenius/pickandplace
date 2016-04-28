@@ -9,6 +9,7 @@
 #define JOB_H_
 
 #include "Observer.h"
+#include <iostream>
 
 namespace pickandplace {
 
@@ -25,8 +26,8 @@ public:
 
 	Job::JobState getState();
 
-private:
 	Job::JobState state;
+private:
 };
 
 } /* namespace pickandplace */

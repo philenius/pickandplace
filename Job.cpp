@@ -7,6 +7,8 @@
 
 #include "Job.h"
 
+using namespace std;
+
 namespace pickandplace {
 
 Job::Job() {
@@ -17,7 +19,12 @@ Job::~Job() {
 }
 
 void Job::handleEvent(){
-	recalculate();
+	if(Job::getState() == none) {
+		start();
+	}
+	else if(Job::getState() == working) {
+		recalculate();
+	}
 }
 
 Job::JobState Job::getState(){
