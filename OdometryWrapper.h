@@ -16,7 +16,7 @@ using namespace rec::robotino::api2;
 
 namespace pickandplace {
 
-class OdometryWrapper : rec::robotino::api2::Odometry, public Subject {
+class OdometryWrapper : Odometry, public Subject {
 public:
 	OdometryWrapper();
 	virtual ~OdometryWrapper();
