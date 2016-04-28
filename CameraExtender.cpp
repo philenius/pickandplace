@@ -84,5 +84,7 @@ void CameraExtender::imageReceivedEvent(const unsigned char* data,
 		fwrite(data, width * height * 3, 1, fp);
 		fclose(fp);
 	}
+
+	notify();
 }
 }

@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <limits.h>
+#include "Subject.h"
 #include "rec/robotino/api2/all.h"
 
 using namespace rec::robotino::api2;
@@ -21,7 +22,7 @@ using namespace std;
 
 namespace pickandplace {
 
-class CameraExtender: Camera {
+class CameraExtender: Camera, public Subject {
 
 public:
 	CameraExtender();
