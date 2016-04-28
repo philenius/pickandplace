@@ -33,6 +33,8 @@ void OdometryWrapper::readingsEvent(double x, double y, double phi, float vx, fl
 	this->omega = omega;
 	this->sequence = sequence;
 
+	if(x_position == 0.0 || y_position == 0.0 || phi == 0.0) return;
+
 	notify();
 
 //	// Test routine for event handling
