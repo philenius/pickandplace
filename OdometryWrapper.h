@@ -10,6 +10,7 @@
 
 #include "rec/robotino/api2/all.h"
 #include "Subject.h"
+#include <iostream>
 
 using namespace rec::robotino::api2;
 
@@ -23,6 +24,10 @@ public:
 	void readingsEvent( double x, double y, double phi, float vx, float vy, float omega, unsigned int sequence );
 	void printValues();
 	void reset();
+
+	double getX();
+	double getY();
+	double getPhi();
 
 private:
 	double x_position;

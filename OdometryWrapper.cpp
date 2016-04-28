@@ -7,7 +7,7 @@
 
 #include "OdometryWrapper.h"
 
-#include <iostream>
+using namespace std;
 
 namespace pickandplace {
 
@@ -41,12 +41,12 @@ void OdometryWrapper::readingsEvent(double x, double y, double phi, float vx, fl
 //	if(x_position < 0.2)
 //	{
 //		drive.setVelocity(0.2,0.0,0.0);
-//		std::cout << "-move" << std::endl;
+//		cout << "-move" << endl;
 //	}
 //	else
 //	{
 //		drive.setVelocity(0.0,0.0,0.0);
-//		std::cout << "-stop" << std::endl;
+//		cout << "-stop" << endl;
 //	}
 }
 
@@ -55,13 +55,25 @@ void OdometryWrapper::reset(){
 }
 
 void OdometryWrapper::printValues(){
-	std::cout << "#:  " << sequence << std::endl;
-	std::cout << "X:  " << x_position << std::endl;
-	std::cout << "Y:  " << y_position << std::endl;
-	std::cout << "P:  " << phi << std::endl;
-	std::cout << "Vx: " << vx << std::endl;
-	std::cout << "Vy: " << vy << std::endl;
-	std::cout << "Vp: " << omega << std::endl;
+	cout << "#:  " << sequence << endl;
+	cout << "X:  " << x_position << endl;
+	cout << "Y:  " << y_position << endl;
+	cout << "P:  " << phi << endl;
+	cout << "Vx: " << vx << endl;
+	cout << "Vy: " << vy << endl;
+	cout << "Vp: " << omega << endl;
+}
+
+
+
+double OdometryWrapper::getX() {
+	return x_position;
+}
+double OdometryWrapper::getY() {
+	return y_position;
+}
+double OdometryWrapper::getPhi() {
+	return phi;
 }
 
 
