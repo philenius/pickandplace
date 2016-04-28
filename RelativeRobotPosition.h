@@ -35,6 +35,17 @@ public:
 	void getPosition(int* differenceOfPixels, float* leftPixelPercentage,
 			float* rightPixelPercentage);
 
+	/**
+	 * This method verifies whether the center of the image contains yellow pixels. This method is intended to be called after the method 'getPosition()' indicates
+	 * that the robot is centered in front of the yellow marker. It may happen that 'getPosition()' says that the robot is centered when there are two yellow markers
+	 * at the same time visible. Using this method you can verify whether this situation is present or not.
+	 * Applies a mask to the camera image and calculates the amount of yellow pixels within this area. The mask has a radius of 30 pixels and lays at the center
+	 * of the image.
+	 * @param threshold		Represents the amount of yellow pixels which are needed so that this method will return true. Standard value is 50.
+	 * @return				Returns true, if the threshold was succeeded. Returns otherwise false;
+	 */
+	bool isYellowBoxInCenter(int threshold = 50);
+
 private:
 
 	/**
@@ -50,7 +61,8 @@ private:
 	 * @param leftSidePercentage	The amount of yellow pixels in percent on the left half of the camera image.
 	 * @param rightPixelPercentage	The amount of yellow pixels in percent on the right half of the camera image.
 	 */
-	void WriteDebugInfo(float leftSidePercentage, float rightSidePercentage, int noneZeroPixels);
+	void WriteDebugInfo(float leftSidePercentage, float rightSidePercentage,
+			int noneZeroPixels);
 
 	/**
 	 * Converts a given float to a string.

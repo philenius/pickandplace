@@ -47,7 +47,7 @@ void RelativeRobotPosition::getPosition(int* differenceOfPixels,
 
 	// negative means: too much on the left side; positive means: too much in the right side
 	int resultValue = rightPixelCount - leftPixelCount;
-	cout << "result: " << resultValue << endl;
+//	cout << "result: " << resultValue << endl;
 
 	int totalPixels = leftPixelCount + rightPixelCount;
 	float leftSideRatioValue = (float) leftPixelCount / totalPixels;
@@ -64,10 +64,27 @@ void RelativeRobotPosition::getPosition(int* differenceOfPixels,
 	} else {
 		Size size(320, 240);
 		Mat empty(size, CV_8UC3, Scalar(0, 0, 0));
-		putText(empty, "< 300 pixels detected", Point(55, 120), CV_FONT_NORMAL, 0.6,
-				Scalar(255, 255, 255));
+		putText(empty, "< 300 pixels detected", Point(55, 120), CV_FONT_NORMAL,
+				0.6, Scalar(255, 255, 255));
 		imshow("debug info", empty);
 	}
+}
+
+bool RelativeRobotPosition::isYellowBoxInCenter(int threshold = 50) {
+	Mat src = this->ExtractColoredBox();
+
+	// The mask covers the center of the camera image with a radius of 30 pixels
+	Mat mask(src.rows, src.cols, CV_8U, Scalar(0, 0, 0));
+	rectangle(mask, Point(src.cols / 2 - 30, 0), Point(src.cols / 2 + 30, src.rows),
+			Scalar(255, 255, 255), -1);
+
+	Mat dst;
+	int count = bitwise_and(src, mask, dst);
+
+	if (count >= threshold) {
+		return true;
+	}
+	return false;
 }
 
 void RelativeRobotPosition::WriteDebugInfo(float leftSidePercentage,
