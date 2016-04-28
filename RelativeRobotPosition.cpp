@@ -70,7 +70,7 @@ void RelativeRobotPosition::getPosition(int* differenceOfPixels,
 	}
 }
 
-bool RelativeRobotPosition::isYellowBoxInCenter(int threshold = 50) {
+bool RelativeRobotPosition::isYellowBoxInCenter(int threshold) {
 	Mat src = this->ExtractColoredBox();
 
 	// The mask covers the center of the camera image with a radius of 30 pixels
@@ -78,8 +78,10 @@ bool RelativeRobotPosition::isYellowBoxInCenter(int threshold = 50) {
 	rectangle(mask, Point(src.cols / 2 - 30, 0), Point(src.cols / 2 + 30, src.rows),
 			Scalar(255, 255, 255), -1);
 
+	// Applies mask to image and counts the non zero pixels
 	Mat dst;
-	int count = bitwise_and(src, mask, dst);
+	bitwise_and(src, mask, dst);
+	int count = countNonZero(dst);
 
 	if (count >= threshold) {
 		return true;
