@@ -53,9 +53,9 @@ void RelativeRobotPosition::getPosition(int* differenceOfPixels,
 	float leftSideRatioValue = (float) leftPixelCount / totalPixels;
 	float rightSideRatioValue = (float) rightPixelCount / totalPixels;
 
-	differenceOfPixels = &resultValue;
-	leftPixelPercentage = &leftSideRatioValue;
-	rightPixelPercentage = &rightSideRatioValue;
+	*differenceOfPixels = resultValue;
+	*leftPixelPercentage = leftSideRatioValue;
+	*rightPixelPercentage = rightSideRatioValue;
 
 	// Only write debug info if there enough yellow pixels detected
 	if ((leftPixelCount + rightPixelCount) > 300) {
