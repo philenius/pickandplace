@@ -8,12 +8,22 @@
 #ifndef CONTROLLER_H_
 #define CONTROLLER_H_
 
+#include "Job.h"
+#include "MyCom.h"
+#include <ctime>
+#include "OdometryWrapper.h"
+#include "CameraExtender.h"
+#include "rec/robotino/api2/all.h"
+
+#include "DriveJob.h"
+#include "PositioningJob.h"
+
 namespace pickandplace {
 
 class Controller {
 public:
 	Controller();
-	virtual ~Controller();
+	~Controller();
 
 	void mainSequence();
 
@@ -22,9 +32,18 @@ public:
 	void driveFromRightToLeftPlatform();
 	void targetStacker(int stackerNumber);
 	void scanStackerStates();
+	void driveTest();
+	void positioningTest();
 
 private:
-	void executionLoop(int timeOutSeconds, bool executableJob);
+	bool isInitialized;
+	void initSequence();
+	void executionLoop(int timeOutSeconds, Job * executableJob);
+
+	MyCom com;
+	OmniDrive drive;
+	OdometryWrapper odometry;
+	CameraExtender camera;
 };
 
 } /* namespace pickandplace */
