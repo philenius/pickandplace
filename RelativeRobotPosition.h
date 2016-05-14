@@ -24,16 +24,28 @@ public:
 	virtual ~RelativeRobotPosition();
 
 	/**
-	 * Calculates the relative position of the robot compared to the yellow cardboard. The yellow cardboard has to be directly in the middle of the platform.
-	 * The size of the cardboard doesn't matter, only it has to be visible for the camera. All bright and dark tones of yellow cardboard will be detected.
-	 * This method divides the camera image in two halves (vertical cut). Then the amount of detected yellow pixels is counted.
+	 * Calculates the relative position of the robot compared to the black line out of tape.
+	 * The size of the black line doesn't matter, only it has to be visible for the camera. All bright and dark tones of black tape will be detected.
+	 * This method divides the camera image in two halves (vertical cut). Then the amount of detected black pixels is counted on both sides.
 	 * @param differenceOfPixels	The difference of right pixels to left pixels (right - left). If this value is negative, then the robots need to be moved
 	 * 								more to the left. If this value is positive, then the robots needs to be moved more to the right.
 	 * @param leftPixelPercentage	The amount of yellow pixels in percent (of all pixels) residing on the left half of the camera image.
 	 * @param rightPixelPercentage	The amount of yellow pixels in percent (of all pixels) residing on the right half of the camera image.
 	 */
-	void getPosition(int* differenceOfPixels, float* leftPixelPercentage,
-			float* rightPixelPercentage);
+	void getPositionForBlackLine(int* differenceOfPixels,
+			float* leftPixelPercentage, float* rightPixelPercentage);
+
+	/**
+	 * Calculates the relative position of the robot compared to the yellow cardboard. The yellow cardboard has to be directly in the middle of the platform.
+	 * The size of the cardboard doesn't matter, only it has to be visible for the camera. All bright and dark tones of yellow cardboard will be detected.
+	 * This method divides the camera image in two halves (vertical cut). Then the amount of detected yellow pixels is counted on both sides.
+	 * @param differenceOfPixels	The difference of right pixels to left pixels (right - left). If this value is negative, then the robots need to be moved
+	 * 								more to the left. If this value is positive, then the robots needs to be moved more to the right.
+	 * @param leftPixelPercentage	The amount of yellow pixels in percent (of all pixels) residing on the left half of the camera image.
+	 * @param rightPixelPercentage	The amount of yellow pixels in percent (of all pixels) residing on the right half of the camera image.
+	 */
+	void getPositionForYellowCardboard(int* differenceOfPixels,
+			float* leftPixelPercentage, float* rightPixelPercentage);
 
 	/**
 	 * This method verifies whether the center of the image contains yellow pixels. This method is intended to be called after the method 'getPosition()' indicates
@@ -53,7 +65,14 @@ private:
 	 * This method detects even very dark or bright tones of yellow.
 	 * @return Returns the image with the applied binary threshold.
 	 */
-	Mat ExtractColoredBox();
+	Mat ExtractYellowBox();
+
+	/**
+	 * Applies a binary threshold on the image filtering for black / dark colors. This method is specified to extract a black line of tape.
+	 * This method detects dark and bright tones of black tape.
+	 * @return
+	 */
+	Mat ExtractBlackLine();
 
 	/**
 	 * Displays debug information such as the ratio of pixels on the left compared to pixels on the right side. Debug infos are written onto the
@@ -70,6 +89,16 @@ private:
 	 * @return		The float represented by a string.
 	 */
 	string convertFloatToString(float value);
+
+	/**
+	 *
+	 * @param src
+	 * @param differenceOfPixels
+	 * @param leftPixelPercentage
+	 * @param rightPixelPercentage
+	 */
+	void countLeftAndRightSidePixels(const Mat& src, int* differenceOfPixels,
+			float* leftPixelPercentage, float* rightPixelPercentage);
 };
 
 } /* namespace pickandplace */

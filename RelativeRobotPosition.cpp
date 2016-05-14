@@ -16,12 +16,25 @@ RelativeRobotPosition::RelativeRobotPosition() {
 RelativeRobotPosition::~RelativeRobotPosition() {
 }
 
-void RelativeRobotPosition::getPosition(int* differenceOfPixels,
+void RelativeRobotPosition::getPositionForYellowCardboard(
+		int* differenceOfPixels, float* leftPixelPercentage,
+		float* rightPixelPercentage) {
+	Mat src;
+	src = ExtractYellowBox();
+
+	countLeftAndRightSidePixels(src, differenceOfPixels, leftPixelPercentage, rightPixelPercentage);
+}
+
+void RelativeRobotPosition::getPositionForBlackLine(int* differenceOfPixels,
 		float* leftPixelPercentage, float* rightPixelPercentage) {
 	Mat src;
+	src = ExtractBlackLine();
 
-	src = ExtractColoredBox();
+	countLeftAndRightSidePixels(src, differenceOfPixels, leftPixelPercentage, rightPixelPercentage);
+}
 
+void RelativeRobotPosition::countLeftAndRightSidePixels(const Mat& src, int* differenceOfPixels,
+		float* leftPixelPercentage, float* rightPixelPercentage) {
 	if (!src.data) {
 		cout << "Extracted image could not be loaded!" << endl;
 		throw "Extracted image could not be loaded!";
@@ -41,23 +54,23 @@ void RelativeRobotPosition::getPosition(int* differenceOfPixels,
 	Mat leftHalfOfImage, rightHalfOfImage;
 	bitwise_and(src, leftMask, leftHalfOfImage);
 	bitwise_and(src, rightMask, rightHalfOfImage);
-
 	int leftPixelCount = countNonZero(leftHalfOfImage);
 	int rightPixelCount = countNonZero(rightHalfOfImage);
+	cout << "left: " << leftPixelCount << "    right: " << rightPixelCount << endl;
+
 
 	// negative means: too much on the left side; positive means: too much in the right side
 	int resultValue = rightPixelCount - leftPixelCount;
-//	cout << "result: " << resultValue << endl;
 
 	int totalPixels = leftPixelCount + rightPixelCount;
-	float leftSideRatioValue = (float) leftPixelCount / totalPixels;
-	float rightSideRatioValue = (float) rightPixelCount / totalPixels;
+	float leftSideRatioValue = (float) (leftPixelCount) / totalPixels;
+	float rightSideRatioValue = (float) (rightPixelCount) / totalPixels;
 
 	*differenceOfPixels = resultValue;
 	*leftPixelPercentage = leftSideRatioValue;
 	*rightPixelPercentage = rightSideRatioValue;
 
-	// Only write debug info if there enough yellow pixels detected
+	// Only write debug info if enough pixels are detected
 	if ((leftPixelCount + rightPixelCount) > 300) {
 		WriteDebugInfo(leftSideRatioValue, rightSideRatioValue,
 				leftPixelCount + rightPixelCount);
@@ -71,12 +84,12 @@ void RelativeRobotPosition::getPosition(int* differenceOfPixels,
 }
 
 bool RelativeRobotPosition::isYellowBoxInCenter(int threshold) {
-	Mat src = this->ExtractColoredBox();
+	Mat src = this->ExtractYellowBox();
 
 	// The mask covers the center of the camera image with a radius of 30 pixels
 	Mat mask(src.rows, src.cols, CV_8U, Scalar(0, 0, 0));
-	rectangle(mask, Point(src.cols / 2 - 30, 0), Point(src.cols / 2 + 30, src.rows),
-			Scalar(255, 255, 255), -1);
+	rectangle(mask, Point(src.cols / 2 - 30, 0),
+			Point(src.cols / 2 + 30, src.rows), Scalar(255, 255, 255), -1);
 
 	// Applies mask to image and counts the non zero pixels
 	Mat dst;
@@ -142,7 +155,7 @@ void RelativeRobotPosition::WriteDebugInfo(float leftSidePercentage,
 	waitKey(2);
 }
 
-Mat RelativeRobotPosition::ExtractColoredBox() {
+Mat RelativeRobotPosition::ExtractYellowBox() {
 
 	Mat src, hsv, dst;
 
@@ -161,7 +174,7 @@ Mat RelativeRobotPosition::ExtractColoredBox() {
 	Scalar upperBoundary(33.5, 168.3, 255);
 	inRange(hsv, lowerBoundary, upperBoundary, dst);
 
-	// Applies an opening operation to the image after the binary threshold
+	// Applies an opening morphological operation to the image
 	Mat eroded, dilated;
 	Mat element = getStructuringElement(MORPH_RECT, Size(4, 4));
 	Mat element2 = getStructuringElement(MORPH_RECT, Size(12, 12));
@@ -174,6 +187,42 @@ Mat RelativeRobotPosition::ExtractColoredBox() {
 	waitKey(2);
 
 	return dilated;
+}
+
+Mat RelativeRobotPosition::ExtractBlackLine() {
+
+	Mat src, gray, dst;
+
+	src = imread(CAMERAIMAGE, CV_LOAD_IMAGE_COLOR);
+
+	if (!src.data) {
+		cout << "Camera image could not be loaded!" << endl;
+		throw "Camera image could not be loaded!";
+	}
+
+	// Convert image into grayscale
+	cvtColor(src, gray, CV_RGB2GRAY);
+
+	// Applies a binary threshold filtering for black tones
+	Scalar lowerBoundary(0, 0, 0);
+	Scalar upperBoundary(100, 100, 100);
+	inRange(gray, lowerBoundary, upperBoundary, dst);
+
+	// The mask covers the upper half of the image (horizontal cut).
+	Mat mask(src.rows, src.cols, CV_8U, Scalar(0, 0, 0));
+	rectangle(mask, Point(0, 0), Point(src.cols, src.rows / 2),
+			Scalar(255, 255, 255), -1);
+
+	// Applies mask to the image
+	Mat maskedImage;
+	bitwise_and(dst, mask, maskedImage);
+
+
+	// Shows image
+	imshow("binary threshold", maskedImage);
+	waitKey(2);
+
+	return maskedImage;
 }
 
 string RelativeRobotPosition::convertFloatToString(float value) {
