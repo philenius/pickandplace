@@ -17,6 +17,7 @@
 
 #include "DriveJob.h"
 #include "PositioningJob.h"
+#include "RotateJob.h"
 
 namespace pickandplace {
 
@@ -34,6 +35,7 @@ public:
 	void scanStackerStates();
 	void driveTest();
 	void positioningTest();
+	void rotationTest();
 
 private:
 	bool isInitialized;

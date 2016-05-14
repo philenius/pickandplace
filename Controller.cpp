@@ -82,4 +82,10 @@ void Controller::positioningTest() {
 	this->executionLoop(1000, positioningJob);
 }
 
+void Controller::rotationTest() {
+	cout << "starting rotation test" << endl;
+	RotateJob * rotateJob = new RotateJob(&odometry, &drive, 360.0);
+	this->executionLoop(1000, rotateJob);
+}
+
 } /* namespace pickandplace */
