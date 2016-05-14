@@ -32,9 +32,10 @@ void PositioningJob::recalculate() {
 	int pixelDif;
 	float leftPercentage;
 	float rightPercentage;
+	int totalPixelCount;
 
 	pixelDif = 99;
-	position->getPositionForYellowCardboard(&pixelDif, &leftPercentage, &rightPercentage);
+	position->getPositionForYellowCardboard(&pixelDif, &leftPercentage, &rightPercentage, &totalPixelCount);
 	cout << "Job recalculating" << endl;
 
 
