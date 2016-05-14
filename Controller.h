@@ -18,6 +18,7 @@
 #include "DriveJob.h"
 #include "PositioningJob.h"
 #include "RotateJob.h"
+#include "FollowLineJob.h"
 
 namespace pickandplace {
 
@@ -33,9 +34,10 @@ public:
 	void driveFromRightToLeftPlatform();
 	void targetStacker(int stackerNumber);
 	void scanStackerStates();
-	void driveTest();
-	void positioningTest();
-	void rotationTest();
+	void driveDistance(double distance, double phi);
+	void driveToZylinder();
+	void rotate(double deltaPhi);
+	void followLine();
 
 private:
 	bool isInitialized;

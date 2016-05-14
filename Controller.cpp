@@ -64,28 +64,35 @@ void Controller::executionLoop(int timeOutSeconds, Job * executableJob) {
 		}
 	}
 
-	cout << "Press any key to exit..." << endl;
-	waitForKey();
+//	cout << "Press any key to exit..." << endl;
+//	waitForKey();
 }
 
 
-void Controller::driveTest() {
+void Controller::driveDistance(double distance, double phi) {
 	cout << "starting drive test" << endl;
-	DriveJob * driveJob = new DriveJob(&odometry, &drive, 1.0, 4.71238);
+	DriveJob * driveJob = new DriveJob(&odometry, &drive, distance, phi);
 	this->executionLoop(100, driveJob);
 	cout << "execution finished" << endl;
 }
 
-void Controller::positioningTest() {
+void Controller::driveToZylinder() {
 	RelativeRobotPosition position;
 	PositioningJob * positioningJob = new PositioningJob(&camera, &position, &drive);
 	this->executionLoop(1000, positioningJob);
 }
 
-void Controller::rotationTest() {
-	cout << "starting rotation test" << endl;
-	RotateJob * rotateJob = new RotateJob(&odometry, &drive, 360.0);
+void Controller::rotate(double deltaPhi) {
+	cout << "starting rotation" << endl;
+	RotateJob * rotateJob = new RotateJob(&odometry, &drive, deltaPhi);
 	this->executionLoop(1000, rotateJob);
+}
+
+void Controller::followLine() {
+	cout << "starting follow line" << endl;
+	RelativeRobotPosition position;
+	FollowLineJob * job = new FollowLineJob(&camera, &position, &drive);
+	this->executionLoop(1000, job);
 }
 
 } /* namespace pickandplace */
