@@ -18,23 +18,23 @@ RelativeRobotPosition::~RelativeRobotPosition() {
 
 void RelativeRobotPosition::getPositionForYellowCardboard(
 		int* differenceOfPixels, float* leftPixelPercentage,
-		float* rightPixelPercentage) {
+		float* rightPixelPercentage, int* totalPixelCount) {
 	Mat src;
 	src = ExtractYellowBox();
 
-	countLeftAndRightSidePixels(src, differenceOfPixels, leftPixelPercentage, rightPixelPercentage);
+	countLeftAndRightSidePixels(src, differenceOfPixels, leftPixelPercentage, rightPixelPercentage, totalPixelCount);
 }
 
 void RelativeRobotPosition::getPositionForBlackLine(int* differenceOfPixels,
-		float* leftPixelPercentage, float* rightPixelPercentage) {
+		float* leftPixelPercentage, float* rightPixelPercentage, int* totalPixelCount) {
 	Mat src;
 	src = ExtractBlackLine();
 
-	countLeftAndRightSidePixels(src, differenceOfPixels, leftPixelPercentage, rightPixelPercentage);
+	countLeftAndRightSidePixels(src, differenceOfPixels, leftPixelPercentage, rightPixelPercentage, totalPixelCount);
 }
 
 void RelativeRobotPosition::countLeftAndRightSidePixels(const Mat& src, int* differenceOfPixels,
-		float* leftPixelPercentage, float* rightPixelPercentage) {
+		float* leftPixelPercentage, float* rightPixelPercentage, int* totalPixelCount) {
 	if (!src.data) {
 		cout << "Extracted image could not be loaded!" << endl;
 		throw "Extracted image could not be loaded!";
@@ -58,7 +58,6 @@ void RelativeRobotPosition::countLeftAndRightSidePixels(const Mat& src, int* dif
 	int rightPixelCount = countNonZero(rightHalfOfImage);
 	cout << "left: " << leftPixelCount << "    right: " << rightPixelCount << endl;
 
-
 	// negative means: too much on the left side; positive means: too much in the right side
 	int resultValue = rightPixelCount - leftPixelCount;
 
@@ -69,6 +68,7 @@ void RelativeRobotPosition::countLeftAndRightSidePixels(const Mat& src, int* dif
 	*differenceOfPixels = resultValue;
 	*leftPixelPercentage = leftSideRatioValue;
 	*rightPixelPercentage = rightSideRatioValue;
+	*totalPixelCount = totalPixels;
 
 	// Only write debug info if enough pixels are detected
 	if ((leftPixelCount + rightPixelCount) > 300) {

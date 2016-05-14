@@ -33,7 +33,7 @@ public:
 	 * @param rightPixelPercentage	The amount of yellow pixels in percent (of all pixels) residing on the right half of the camera image.
 	 */
 	void getPositionForBlackLine(int* differenceOfPixels,
-			float* leftPixelPercentage, float* rightPixelPercentage);
+			float* leftPixelPercentage, float* rightPixelPercentage, int* totalPixelCount);
 
 	/**
 	 * Calculates the relative position of the robot compared to the yellow cardboard. The yellow cardboard has to be directly in the middle of the platform.
@@ -45,7 +45,7 @@ public:
 	 * @param rightPixelPercentage	The amount of yellow pixels in percent (of all pixels) residing on the right half of the camera image.
 	 */
 	void getPositionForYellowCardboard(int* differenceOfPixels,
-			float* leftPixelPercentage, float* rightPixelPercentage);
+			float* leftPixelPercentage, float* rightPixelPercentage, int* totalPixelCount);
 
 	/**
 	 * This method verifies whether the center of the image contains yellow pixels. This method is intended to be called after the method 'getPosition()' indicates
@@ -98,7 +98,7 @@ private:
 	 * @param rightPixelPercentage
 	 */
 	void countLeftAndRightSidePixels(const Mat& src, int* differenceOfPixels,
-			float* leftPixelPercentage, float* rightPixelPercentage);
+			float* leftPixelPercentage, float* rightPixelPercentage, int* totalPixelCount);
 };
 
 } /* namespace pickandplace */
