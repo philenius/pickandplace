@@ -58,7 +58,7 @@ void DriveJob::recalculate() {
 	double speed = 0;
 	if((distance - actualDistance) > 0.1) {
 		cout << "DRIVE!" << endl;
-		speed = 0.2;
+		speed = 0.1;
 		drive->setVelocity(cos(phi) * speed, sin(phi) * speed, 0.0);
 	}
 	else {
