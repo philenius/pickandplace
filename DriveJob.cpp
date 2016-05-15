@@ -51,14 +51,14 @@ void DriveJob::start() {
 void DriveJob::recalculate() {
 	actual_x = this->odometry->getX();
 	actual_y = this->odometry->getY();
-	cout << "X: " << actual_x << endl;
-	cout << "Y: " << actual_y << endl;
+//	cout << "X: " << actual_x << endl;
+//	cout << "Y: " << actual_y << endl;
 	double actualDistance = sqrt(pow((actual_x - init_x),2) + pow((actual_y - init_y),2));
-	cout << "ActualDistance: " << actualDistance << endl;
+//	cout << "ActualDistance: " << actualDistance << endl;
 	double speed = 0;
 	if((distance - actualDistance) > 0.1) {
-		cout << "DRIVE!" << endl;
-		speed = 0.1;
+		cout << "Distance greater than 0.1" << endl;
+		speed = 0.08;
 		drive->setVelocity(cos(phi) * speed, sin(phi) * speed, 0.0);
 	}
 	else {
