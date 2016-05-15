@@ -24,7 +24,7 @@ PositioningJob::~PositioningJob() {
 }
 
 void PositioningJob::start() {
-	cout << "Job started" << endl;
+//	cout << "Job started" << endl;
 	Job::state = working;
 }
 
@@ -36,31 +36,31 @@ void PositioningJob::recalculate() {
 
 	pixelDif = 99;
 	position->getPositionForYellowCardboard(&pixelDif, &leftPercentage, &rightPercentage, &totalPixelCount);
-	cout << "Job recalculating" << endl;
+//	cout << "Job recalculating" << endl;
 
 
-	cout << "Dif:   " << pixelDif << endl;
-	cout << "Left:  " << leftPercentage << endl;
-	cout << "Right: " << rightPercentage << endl;
+//	cout << "Dif:   " << pixelDif << endl;
+//	cout << "Left:  " << leftPercentage << endl;
+//	cout << "Right: " << rightPercentage << endl;
 
 
 	if(leftPercentage > 0.40 && rightPercentage > 0.40) {
 		if(position->isYellowBoxInCenter(50)) {
-			cout << "Job finished" << endl;
+//			cout << "Job finished" << endl;
 			Job::state = finished;
 		}
 		else {
 			drive->setVelocity(0.0, 0.05, 0.0);
-			cout << "Drive fast right" << endl;
+//			cout << "Drive fast right" << endl;
 		}
 	}
 	else {
 		if(rightPercentage > leftPercentage) {
-			cout << "Drive right" << endl;
+//			cout << "Drive right" << endl;
 			drive->setVelocity(0.0, -0.02, 0.0);
 		}
 		if(leftPercentage > rightPercentage) {
-			cout << "Drive left" << endl;
+//			cout << "Drive left" << endl;
 			drive->setVelocity(0.0, 0.02, 0.0);
 		}
 	}

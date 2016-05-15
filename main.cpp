@@ -39,8 +39,13 @@ using namespace std;
 //}
 
 int main(int argc, char **argv) {
+	int depotNumber;
+
 	Controller * controller = new Controller();
-	controller->rotationTest();
+	controller->followLine();
+	controller->rotate(42.0);
+	controller->driveDistance(0.25, 0.0);
+	controller->searchCylinder(1);
 
 //	string hostname = "172.26.1.1";
 //	if (argc > 1) {

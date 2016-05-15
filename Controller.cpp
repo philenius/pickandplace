@@ -76,7 +76,7 @@ void Controller::driveDistance(double distance, double phi) {
 	cout << "execution finished" << endl;
 }
 
-void Controller::driveToZylinder() {
+void Controller::driveToDepot() {
 	RelativeRobotPosition position;
 	PositioningJob * positioningJob = new PositioningJob(&camera, &position, &drive);
 	this->executionLoop(1000, positioningJob);
@@ -93,6 +93,35 @@ void Controller::followLine() {
 	RelativeRobotPosition position;
 	FollowLineJob * job = new FollowLineJob(&camera, &position, &drive);
 	this->executionLoop(1000, job);
+}
+
+void Controller::searchCylinder(int startDepotPosition) {
+	CylinderDetection cylinderDetection;
+	int position = startDepotPosition;
+	for(int i = 0; i < 3; i++) {
+		cout << "Positioning in front of depot" << endl;
+		driveToDepot();
+		if (cylinderDetection.IsCylinderPresent()) {
+			cout << "Cylinder detected!" << endl;
+			break;
+		}
+		if(position == 0) {
+			cout << "Position 0" << endl;
+			driveDistance(0.32, -0.5 * M_PI);
+			position = 2;
+		}
+		else if(position == 1) {
+			cout << "Position 1" << endl;
+			driveDistance(0.16, 0.5 * M_PI);
+			position = 0;
+		}
+		else if(position == 2) {
+			cout << "Position 2" << endl;
+			driveDistance(0.16, 0.5 * M_PI);
+			position = 1;
+		}
+	}
+
 }
 
 } /* namespace pickandplace */

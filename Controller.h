@@ -13,6 +13,7 @@
 #include <ctime>
 #include "OdometryWrapper.h"
 #include "CameraExtender.h"
+#include "CylinderDetection.h"
 #include "rec/robotino/api2/all.h"
 
 #include "DriveJob.h"
@@ -32,10 +33,11 @@ public:
 	void driveFromInitialToLeftPlatform();
 	void driveFromLeftToRightPlatform();
 	void driveFromRightToLeftPlatform();
+	void searchCylinder(int startDepotPosition);
 	void targetStacker(int stackerNumber);
 	void scanStackerStates();
 	void driveDistance(double distance, double phi);
-	void driveToZylinder();
+	void driveToDepot();
 	void rotate(double deltaPhi);
 	void followLine();
 

@@ -48,7 +48,7 @@ void FollowLineJob::recalculate() {
 
 	if (leftPercentage > 0.30 && rightPercentage > 0.30) {
 		cout << "Drive through" << endl;
-		drive->setVelocity(0.1, 0.0, 0.0);
+		drive->setVelocity(0.08, 0.0, 0.0);
 		driveCount++;
 	} else {
 		if (rightPercentage > leftPercentage) {
