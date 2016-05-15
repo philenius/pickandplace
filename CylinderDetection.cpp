@@ -9,10 +9,7 @@
 
 namespace pickandplace {
 
-string cameraImage;
-
 CylinderDetection::CylinderDetection() {
-	this->cameraImage = CAMERAIMAGE;
 }
 
 CylinderDetection::~CylinderDetection() {
@@ -27,7 +24,7 @@ CylinderDetection::~CylinderDetection() {
 bool CylinderDetection::IsCylinderPresent() {
 	Mat src, hsv, dst;
 
-	src = imread(this->cameraImage, CV_LOAD_IMAGE_COLOR);
+	src = imread(CAMERAIMAGE, CV_LOAD_IMAGE_COLOR);
 	if (src.empty()) {
 		cout << "Error! The image cannot be read" << endl;
 		return -1;
