@@ -7,9 +7,13 @@ This C++ project can be compiled using CMake. Therefore, the following dependenc
 * OpenCV 2.4.0
 
 Compiling and running the application can be done by executing the following commands in a terminal:
+
 1. Change the directory to this project: `cd pickandplace/`
+
 2. `cmake .`
+
 3. `make`
+
 4. `target/pickandplace`
 
 
